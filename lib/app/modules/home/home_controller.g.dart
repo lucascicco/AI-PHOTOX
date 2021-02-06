@@ -22,13 +22,13 @@ mixin _$HomeController on _HomeControllerBase, Store {
   final _$currentImageAtom = Atom(name: '_HomeControllerBase.currentImage');
 
   @override
-  File get currentImage {
+  PickedFile get currentImage {
     _$currentImageAtom.reportRead();
     return super.currentImage;
   }
 
   @override
-  set currentImage(File value) {
+  set currentImage(PickedFile value) {
     _$currentImageAtom.reportWrite(value, super.currentImage, () {
       super.currentImage = value;
     });
@@ -38,7 +38,7 @@ mixin _$HomeController on _HomeControllerBase, Store {
       ActionController(name: '_HomeControllerBase');
 
   @override
-  void updateCurrentImage(File image) {
+  void updateCurrentImage(PickedFile image) {
     final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
         name: '_HomeControllerBase.updateCurrentImage');
     try {
