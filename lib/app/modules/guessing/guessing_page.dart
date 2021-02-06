@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'home_controller.dart';
-import 'package:image_picker/image_picker.dart';
+import 'guessing_controller.dart';
 
-class HomePage extends StatefulWidget {
+class GuessingPage extends StatefulWidget {
   final String title;
-  const HomePage({Key key, this.title = "Home"}) : super(key: key);
+  const GuessingPage({Key key, this.title = "Guessing"}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _GuessingPageState createState() => _GuessingPageState();
 }
 
-class _HomePageState extends ModularState<HomePage, HomeController> {
+class _GuessingPageState
+    extends ModularState<GuessingPage, GuessingController> {
   //use 'controller' variable to access controller
 
   @override

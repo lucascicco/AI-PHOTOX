@@ -1,5 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'dart:io';
 
 part 'home_controller.g.dart';
 
@@ -8,10 +9,10 @@ class HomeController = _HomeControllerBase with _$HomeController;
 
 abstract class _HomeControllerBase with Store {
   @observable
-  int value = 0;
+  File currentImage;
 
   @action
-  void increment() {
-    value++;
+  void updateCurrentImage(File image) {
+    currentImage = image;
   }
 }

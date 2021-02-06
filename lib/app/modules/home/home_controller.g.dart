@@ -19,18 +19,18 @@ final $HomeController = BindInject(
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HomeController on _HomeControllerBase, Store {
-  final _$valueAtom = Atom(name: '_HomeControllerBase.value');
+  final _$currentImageAtom = Atom(name: '_HomeControllerBase.currentImage');
 
   @override
-  int get value {
-    _$valueAtom.reportRead();
-    return super.value;
+  File get currentImage {
+    _$currentImageAtom.reportRead();
+    return super.currentImage;
   }
 
   @override
-  set value(int value) {
-    _$valueAtom.reportWrite(value, super.value, () {
-      super.value = value;
+  set currentImage(File value) {
+    _$currentImageAtom.reportWrite(value, super.currentImage, () {
+      super.currentImage = value;
     });
   }
 
@@ -38,11 +38,11 @@ mixin _$HomeController on _HomeControllerBase, Store {
       ActionController(name: '_HomeControllerBase');
 
   @override
-  void increment() {
+  void updateCurrentImage(File image) {
     final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
-        name: '_HomeControllerBase.increment');
+        name: '_HomeControllerBase.updateCurrentImage');
     try {
-      return super.increment();
+      return super.updateCurrentImage(image);
     } finally {
       _$_HomeControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -51,7 +51,7 @@ mixin _$HomeController on _HomeControllerBase, Store {
   @override
   String toString() {
     return '''
-value: ${value}
+currentImage: ${currentImage}
     ''';
   }
 }
