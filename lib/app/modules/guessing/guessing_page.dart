@@ -26,17 +26,19 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
 
   @override
   void initState() {
-    super.initState();
-
     _controller = AnimationController(
       vsync: this, // the SingleTickerProviderStateMixin
       duration: Duration(seconds: 3),
     );
 
     animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
+
+    classifyImage();
+
+    super.initState();
   }
 
-  classifyImage(File image) async {
+  classifyImage() async {
     var output = await Tflite.runModelOnImage(
         path: homeController.currentImage.path,
         numResults: 2,
@@ -73,8 +75,10 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Text(controller.listTrue.toString(),
-            style: TextStyle(color: Colors.green)),
+        leading: Center(
+          child: Text(controller.listTrue.toString(),
+              style: TextStyle(color: Colors.green, fontSize: 30)),
+        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -84,38 +88,67 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
           ],
         ),
         actions: [
-          Text(controller.listFalse.toString(),
-              style: TextStyle(color: Colors.red)),
+          Container(
+            padding: EdgeInsets.all(10.0),
+            margin: EdgeInsets.only(right: 5.0),
+            child: Center(
+              child: Text(controller.listFalse.toString(),
+                  style: TextStyle(color: Colors.red, fontSize: 30)),
+            ),
+          )
         ],
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey[600],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           if (loading)
-            Container(
-              child: Column(
-                children: <Widget>[
-                  CircularProgressIndicator(),
-                  TypewriterAnimatedTextKit(
-                    text: ["Aguarde...", "Estamos desvendando a imagem..."],
-                    textStyle: TextStyle(fontSize: 30.0),
-                    textAlign: TextAlign.start,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                CircularProgressIndicator(),
+                Container(
+                  margin: EdgeInsets.only(top: 25.0),
+                  width: double.infinity,
+                  height: 90,
+                  child: TypewriterAnimatedTextKit(
+                    text: [
+                      "Aguarde...",
+                      "Estamos desvendando a imagem para você..."
+                    ],
+                    textStyle: TextStyle(fontSize: 30.0, color: Colors.black),
+                    textAlign: TextAlign.center,
                     speed: Duration(milliseconds: 100),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           if (!loading)
             FadeTransition(
                 opacity: animation,
                 child: Column(
                   children: <Widget>[
-                    Image.file(File(homeController.currentImage.path)),
-                    buttonChoose(
-                        true, Icons.check, 'Correto', Colors.greenAccent[100]),
-                    buttonChoose(
-                        false, Icons.close, 'Errado', Colors.redAccent[200]),
+                    Container(
+                      child: Column(
+                        children: <Widget>[
+                          Image.file(File(homeController.currentImage.path)),
+                          if (output != null)
+                            Text(output != null
+                                ? output[0]["label"]
+                                : 'Resultado não encontrado')
+                        ],
+                      ),
+                    ),
+                    Container(
+                      child: Column(
+                        children: <Widget>[
+                          buttonChoose(true, Icons.check, 'Correto',
+                              Colors.greenAccent[100]),
+                          buttonChoose(false, Icons.close, 'Errado',
+                              Colors.redAccent[200]),
+                        ],
+                      ),
+                    )
                   ],
                 )),
         ],
