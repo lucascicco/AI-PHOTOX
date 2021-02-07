@@ -9,8 +9,7 @@ import 'package:tflite/tflite.dart';
 import 'guessing_controller.dart';
 
 class GuessingPage extends StatefulWidget {
-  final String title;
-  const GuessingPage({Key key, this.title = "Guessing"}) : super(key: key);
+  const GuessingPage({Key key}) : super(key: key);
 
   @override
   _GuessingPageState createState() => _GuessingPageState();
@@ -18,6 +17,8 @@ class GuessingPage extends StatefulWidget {
 
 class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
     with SingleTickerProviderStateMixin {
+  HomeController homeController = Modular.get();
+
   bool loading = true;
   List output;
   AnimationController _controller;
@@ -37,7 +38,7 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
 
   classifyImage(File image) async {
     var output = await Tflite.runModelOnImage(
-        path: HomeController().currentImage.path,
+        path: homeController.currentImage.path,
         numResults: 2,
         threshold: 0.5,
         imageMean: 127.5,
@@ -110,7 +111,7 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
                 opacity: animation,
                 child: Column(
                   children: <Widget>[
-                    Image.file(File(HomeController().currentImage.path)),
+                    Image.file(File(homeController.currentImage.path)),
                     buttonChoose(
                         true, Icons.check, 'Correto', Colors.greenAccent[100]),
                     buttonChoose(

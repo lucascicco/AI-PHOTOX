@@ -1,4 +1,4 @@
-import 'package:Aiphotox/app/modules/home/home_controller.dart';
+import '../home/home_controller.dart';
 
 import 'guessing_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';

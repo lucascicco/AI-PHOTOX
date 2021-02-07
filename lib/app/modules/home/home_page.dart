@@ -5,8 +5,7 @@ import 'home_controller.dart';
 import 'package:image_picker/image_picker.dart';
 
 class HomePage extends StatefulWidget {
-  final String title;
-  const HomePage({Key key, this.title = "Home"}) : super(key: key);
+  const HomePage({Key key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -21,7 +20,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
 
     controller.updateCurrentImage(image);
 
-    //go to next route
+    Modular.to.pushReplacementNamed('/guess');
   }
 
   @override
