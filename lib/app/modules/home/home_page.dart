@@ -38,8 +38,18 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
           backgroundColor: Colors.grey[600],
         ),
         body: Container(
-          child: Center(
-            child: Container(
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Icon(Icons.search, size: 40),
+              SizedBox(width: 10),
+              Text('O que há na foto?',
+                  style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.black,
+                  )),
+            ]),
+            SizedBox(height: 40),
+            Container(
                 width: double.infinity,
                 height: 250,
                 margin: EdgeInsets.symmetric(horizontal: 65),
@@ -52,16 +62,19 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                             style: ElevatedButton.styleFrom(
                               primary: Colors.grey[500], // background
                             ),
-                            child: Column(
+                            child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   SizedBox(height: 5),
                                   Icon(Icons.camera_alt_sharp,
-                                      color: Colors.yellow, size: 30),
-                                  SizedBox(height: 5),
-                                  Text('Tire uma foto',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 20.0))
+                                      color: Colors.amberAccent[100], size: 30),
+                                  SizedBox(width: 5),
+                                  Expanded(
+                                    child: Text('Tire uma foto',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.0)),
+                                  )
                                 ])),
                       ),
                     ],
@@ -75,22 +88,25 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                             style: ElevatedButton.styleFrom(
                               primary: Colors.grey[500], // background
                             ),
-                            child: Column(
+                            child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   SizedBox(height: 5),
                                   Icon(Icons.photo_album_sharp,
-                                      color: Colors.yellow, size: 30),
-                                  SizedBox(height: 5),
-                                  Text('Escolha uma foto',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 20.0))
+                                      color: Colors.amberAccent[100], size: 30),
+                                  SizedBox(width: 5),
+                                  Expanded(
+                                    child: Text('Escolha uma foto',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.0)),
+                                  )
                                 ])),
                       ),
                     ],
                   ),
                 ])),
-          ),
+          ]),
         ));
   }
 }

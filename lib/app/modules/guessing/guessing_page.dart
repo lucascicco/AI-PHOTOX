@@ -23,6 +23,7 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
 
   bool loading = true;
   List output;
+  bool enableButton = true;
   AnimationController _controller;
   Animation animation;
 
@@ -43,9 +44,7 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
     animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
 
     loadTfModel();
-
     ssdMobileNet();
-
     super.initState();
   }
 
@@ -53,7 +52,7 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
     var recognitions = await Tflite.detectObjectOnImage(
         path: homeController.currentImage.path, numResultsPerClass: 1);
 
-    var listResult = [];
+    List<String> listResult = <String>[];
 
     recognitions.forEach((element) {
       return listResult.add(element["detectedClass"]);
@@ -65,9 +64,15 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
       output = listResult;
       loading = false;
     });
+
+    _controller.forward();
   }
 
   void goBack(bool boolean) async {
+    setState(() {
+      enableButton = false;
+    });
+
     controller.addBoolean(boolean);
 
     await Future.delayed(Duration(seconds: 2));
@@ -84,7 +89,7 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
 
   Widget buttonChoose(bool boolean, IconData icon, String text, Color color) {
     return ElevatedButton(
-        onPressed: () => goBack(boolean),
+        onPressed: () => enableButton ? goBack(boolean) : null,
         style: ElevatedButton.styleFrom(
           primary: color, // background
         ),
@@ -102,12 +107,12 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
         Container(
           margin: EdgeInsets.only(top: 25.0),
           width: double.infinity,
-          height: 90,
+          height: 120,
           child: TypewriterAnimatedTextKit(
-            text: ["Aguarde...", "Estamos desvendando a imagem para você..."],
+            text: ["Estamos desvendando o que há na imagem para você..."],
             textStyle: TextStyle(fontSize: 30.0, color: Colors.black),
             textAlign: TextAlign.center,
-            speed: Duration(milliseconds: 100),
+            speed: Duration(milliseconds: 80),
           ),
         ),
       ],
@@ -115,52 +120,56 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
   }
 
   Widget renderScreen(BoxConstraints constraints) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Container(
-          width: constraints.maxWidth * 0.7,
-          height: constraints.maxHeight * 0.4,
-          margin: EdgeInsets.only(bottom: 15.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: Image.file(
-              File(homeController.currentImage.path),
-              fit: BoxFit.fill,
+    return FadeTransition(
+      opacity: animation,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Container(
+            width: constraints.maxWidth * 0.7,
+            height: constraints.maxHeight * 0.4,
+            margin: EdgeInsets.only(bottom: 15.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.file(
+                File(homeController.currentImage.path),
+                fit: BoxFit.fill,
+              ),
             ),
           ),
-        ),
-        Container(
-          height: constraints.maxHeight * 0.1,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: output.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  width: constraints.maxWidth * 0.5,
-                  child: Card(
-                    color: Colors.yellow[800],
-                    child: Container(
-                      child: Center(
-                          child: Text(
-                        output[index].toString().toUpperCase(),
-                        style: TextStyle(color: Colors.white, fontSize: 15.0),
-                      )),
+          Container(
+            height: constraints.maxHeight * 0.1,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: output.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: constraints.maxWidth * 0.5,
+                    child: Card(
+                      color: Colors.yellow[800],
+                      child: Container(
+                        child: Center(
+                            child: Text(
+                          output[index].toString().toUpperCase(),
+                          style: TextStyle(color: Colors.white, fontSize: 15.0),
+                        )),
+                      ),
                     ),
-                  ),
-                );
-              }),
-        ),
-        Container(
-          padding: EdgeInsets.all(15.0),
-          child: Column(
-            children: <Widget>[
-              buttonChoose(true, Icons.check, 'Correto', Colors.green[300]),
-              buttonChoose(false, Icons.close, 'Errado', Colors.redAccent[200]),
-            ],
+                  );
+                }),
           ),
-        )
-      ],
+          Container(
+            padding: EdgeInsets.all(15.0),
+            child: Column(
+              children: <Widget>[
+                buttonChoose(true, Icons.check, 'Correto', Colors.green[300]),
+                buttonChoose(
+                    false, Icons.close, 'Errado', Colors.redAccent[200]),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 

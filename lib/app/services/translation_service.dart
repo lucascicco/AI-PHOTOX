@@ -7,10 +7,13 @@ class GetDataTranslation implements TranslationContract {
   Future<List<String>> getTranslation(List<String> translations) async {
     try {
       final translator = GoogleTranslator();
+
       String toBeTranslated = translations.toString();
 
-      var translatedText =
-          await translator.translate(toBeTranslated, from: 'en', to: 'pt');
+      var translatedText = await translator.translate(
+          toBeTranslated.substring(1, toBeTranslated.length - 1),
+          from: 'en',
+          to: 'pt');
 
       return translatedText.text.split(',').toList();
     } catch (e) {
