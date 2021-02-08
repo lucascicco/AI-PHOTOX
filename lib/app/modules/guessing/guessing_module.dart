@@ -1,13 +1,11 @@
-import '../home/home_controller.dart';
-
-import 'guessing_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import 'guessing_controller.dart';
 import 'guessing_page.dart';
 
 class GuessingModule extends ChildModule {
   @override
-  List<Bind> get binds => [$GuessingController, $HomeController];
+  List<Bind> get binds => [$GuessingController];
 
   @override
   List<ModularRouter> get routers => [

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'home_controller.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../shared/shared_controller.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -11,16 +12,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends ModularState<HomePage, HomeController> {
+  SharedController sharedController = Modular.get();
+
   final picker = ImagePicker();
 
   pickImage(ImageSource source) async {
     var image = await picker.getImage(source: source);
 
-    if (image == null) return null;
+    if (image == null) {
+      return;
+    }
 
-    controller.updateCurrentImage(image);
-
-    Modular.to.pushReplacementNamed('/guess');
+    sharedController.updateCurrentImage(image);
   }
 
   @override

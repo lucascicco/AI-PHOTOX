@@ -1,8 +1,9 @@
 import 'dart:io';
 
+import '../../shared/shared_controller.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import '../home/home_controller.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:tflite/tflite.dart';
@@ -19,7 +20,7 @@ class GuessingPage extends StatefulWidget {
 
 class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
     with SingleTickerProviderStateMixin {
-  HomeController homeController = Modular.get();
+  SharedController sharedController = Modular.get();
 
   bool loading = true;
   List output;
@@ -29,8 +30,8 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
 
   loadTfModel() async {
     await Tflite.loadModel(
-      model: "assets/models/ssd_mobilenet.tflite",
-      labels: "assets/models/labels.txt",
+      model: "assets/models/detect.tflite",
+      labels: "assets/models/labelmap.txt",
     );
   }
 
@@ -45,12 +46,13 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
 
     loadTfModel();
     ssdMobileNet();
+
     super.initState();
   }
 
   ssdMobileNet() async {
     var recognitions = await Tflite.detectObjectOnImage(
-        path: homeController.currentImage.path, numResultsPerClass: 1);
+        path: sharedController.getPath, numResultsPerClass: 1);
 
     List<String> listResult = <String>[];
 
@@ -75,7 +77,7 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
 
     controller.addBoolean(boolean);
 
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
 
     Modular.to.pushReplacementNamed('/home');
   }
@@ -132,7 +134,7 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Image.file(
-                File(homeController.currentImage.path),
+                File(sharedController.getPath),
                 fit: BoxFit.fill,
               ),
             ),

@@ -11,8 +11,12 @@ abstract class _HomeControllerBase with Store {
   @observable
   PickedFile currentImage;
 
+  @computed
+  String get getPath => currentImage.path;
+
   @action
   void updateCurrentImage(PickedFile image) {
     currentImage = image;
+    Modular.to.pushReplacementNamed('/guess', arguments: image);
   }
 }

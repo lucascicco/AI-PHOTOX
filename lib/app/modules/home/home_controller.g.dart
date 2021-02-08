@@ -19,6 +19,14 @@ final $HomeController = BindInject(
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HomeController on _HomeControllerBase, Store {
+  Computed<String> _$getPathComputed;
+
+  @override
+  String get getPath =>
+      (_$getPathComputed ??= Computed<String>(() => super.getPath,
+              name: '_HomeControllerBase.getPath'))
+          .value;
+
   final _$currentImageAtom = Atom(name: '_HomeControllerBase.currentImage');
 
   @override
@@ -51,7 +59,8 @@ mixin _$HomeController on _HomeControllerBase, Store {
   @override
   String toString() {
     return '''
-currentImage: ${currentImage}
+currentImage: ${currentImage},
+getPath: ${getPath}
     ''';
   }
 }
