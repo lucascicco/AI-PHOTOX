@@ -13,9 +13,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends ModularState<HomePage, HomeController> {
   final picker = ImagePicker();
 
-  pickImage() async {
-    var image = await picker.getImage(source: ImageSource.camera);
-    print(image);
+  pickImage(ImageSource source) async {
+    var image = await picker.getImage(source: source);
 
     if (image == null) return null;
 
@@ -40,20 +39,57 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
         ),
         body: Container(
           child: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  ElevatedButton(
-                      onPressed: pickImage,
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.grey[600], // background
+            child: Container(
+                width: double.infinity,
+                height: 250,
+                margin: EdgeInsets.symmetric(horizontal: 65),
+                child: Column(children: <Widget>[
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                            onPressed: () => pickImage(ImageSource.camera),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.grey[500], // background
+                            ),
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  SizedBox(height: 5),
+                                  Icon(Icons.camera_alt_sharp,
+                                      color: Colors.yellow, size: 30),
+                                  SizedBox(height: 5),
+                                  Text('Tire uma foto',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 20.0))
+                                ])),
                       ),
-                      child: Column(children: <Widget>[
-                        Icon(Icons.camera_alt_sharp, color: Colors.yellow),
-                        Text('Tire uma foto',
-                            style: TextStyle(color: Colors.white))
-                      ]))
-                ]),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                            onPressed: () => pickImage(ImageSource.gallery),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.grey[500], // background
+                            ),
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  SizedBox(height: 5),
+                                  Icon(Icons.photo_album_sharp,
+                                      color: Colors.yellow, size: 30),
+                                  SizedBox(height: 5),
+                                  Text('Escolha uma foto',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 20.0))
+                                ])),
+                      ),
+                    ],
+                  ),
+                ])),
           ),
         ));
   }

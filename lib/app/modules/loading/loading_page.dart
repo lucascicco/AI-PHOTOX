@@ -10,67 +10,71 @@ class LoadingPage extends StatefulWidget {
 }
 
 class _LoadingPageState extends State<LoadingPage> {
-  Duration duration = Duration(seconds: 2);
+  Duration duration = Duration(seconds: 4);
 
   bool animateIt = false;
-  int finished = 3;
 
-  void startAnimation() {
-    Timer.periodic(duration, (timer) {
-      if (finished == 0) {
-        return Modular.to.pushReplacementNamed('/home');
-      }
-      setState(() {
-        animateIt = !animateIt;
-        finished--;
-      });
+  void startAnimation() async {
+    await Future.delayed(Duration(seconds: 1));
+
+    setState(() {
+      animateIt = true;
     });
+
+    await Future.delayed(Duration(seconds: 4));
+
+    Modular.to.pushReplacementNamed('/home');
   }
 
   @override
   void initState() {
     startAnimation();
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      return Stack(
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                colors: [
-                  Colors.white,
-                  Colors.yellow[200],
-                  Colors.yellow[500],
-                ],
-              ),
-            ),
-          ),
-          AnimatedContainer(
-            duration: duration,
-            width: animateIt
-                ? constraints.maxWidth * 0.4
-                : constraints.maxWidth * 0.8,
-            height: animateIt
-                ? constraints.maxHeight * 0.4
-                : constraints.maxHeight * 0.8,
-            curve: Curves.bounceInOut,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(Icons.camera_alt_sharp,
-                    color: Colors.yellow, size: double.infinity),
-                Text('AI Photox', style: TextStyle(color: Colors.black))
-              ],
-            ),
-          )
-        ],
-      );
-    });
+    return Scaffold(
+      body: LayoutBuilder(builder: (context, constraints) {
+        return Stack(
+          children: [
+            Container(
+              height: constraints.maxHeight,
+              width: constraints.maxWidth,
+              color: Colors.white,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    AnimatedContainer(
+                        height: animateIt ? constraints.maxHeight * 0.5 : 50,
+                        width: animateIt ? constraints.maxWidth * 0.8 : 70,
+                        margin: EdgeInsets.only(bottom: 50.0),
+                        duration: duration,
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(animateIt ? 25.0 : 0),
+                        ),
+                        child: Image.asset(
+                          'assets/dribbble-cm.gif',
+                          fit: BoxFit.fill,
+                        )),
+                    AnimatedDefaultTextStyle(
+                        duration: duration,
+                        style: animateIt
+                            ? TextStyle(
+                                fontSize: 65.0,
+                                color: Colors.yellowAccent[700],
+                                fontWeight: FontWeight.bold)
+                            : TextStyle(
+                                fontSize: 40.0,
+                                color: Colors.yellowAccent[400]),
+                        child: Text('AI Photox'))
+                  ]),
+            )
+          ],
+        );
+      }),
+    );
   }
 }
