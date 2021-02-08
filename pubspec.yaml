@@ -38,6 +38,7 @@ dependencies:
   tflite: ^1.1.1
   image_picker: ^0.6.7+22
   animated_text_kit: ^3.1.0
+  translator: ^0.1.5
   flutter:
     sdk: flutter
 

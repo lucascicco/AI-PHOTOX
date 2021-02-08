@@ -6,6 +6,7 @@ import '../home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:tflite/tflite.dart';
+import '../../services/translation_service.dart';
 
 import 'guessing_controller.dart';
 
@@ -57,6 +58,8 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
     recognitions.forEach((element) {
       return listResult.add(element["detectedClass"]);
     });
+
+    listResult = await GetDataTranslation().getTranslation(listResult);
 
     setState(() {
       output = listResult;
