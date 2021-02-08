@@ -75,7 +75,7 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
       enableButton = false;
     });
 
-    controller.addBoolean(boolean);
+    sharedController.addBoolean(boolean);
 
     await Future.delayed(Duration(seconds: 1));
 
@@ -181,7 +181,7 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
       appBar: AppBar(
         leading: Center(
           child: Observer(
-            builder: (_) => Text(controller.listTrue.toString(),
+            builder: (_) => Text(sharedController.listTrue.toString(),
                 style: TextStyle(color: Colors.green, fontSize: 30)),
           ),
         ),
@@ -199,7 +199,7 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
             margin: EdgeInsets.only(right: 5.0),
             child: Center(
               child: Observer(
-                builder: (_) => Text(controller.listFalse.toString(),
+                builder: (_) => Text(sharedController.listFalse.toString(),
                     style: TextStyle(color: Colors.red, fontSize: 30)),
               ),
             ),

@@ -5,7 +5,11 @@ import 'guessing_page.dart';
 
 class GuessingModule extends ChildModule {
   @override
-  List<Bind> get binds => [$GuessingController];
+  List<Bind> get binds => [
+        Bind((i) {
+          return GuessingController();
+        })
+      ];
 
   @override
   List<ModularRouter> get routers => [

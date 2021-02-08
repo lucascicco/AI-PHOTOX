@@ -5,7 +5,11 @@ import 'home_page.dart';
 
 class HomeModule extends ChildModule {
   @override
-  List<Bind> get binds => [$HomeController];
+  List<Bind> get binds => [
+        Bind((i) {
+          return HomeController();
+        })
+      ];
 
   @override
   List<ModularRouter> get routers => [
