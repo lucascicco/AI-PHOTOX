@@ -1,16 +1,3 @@
 # Aiphotox
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This mobile application was developed on Flutter using Tensor Flow Lite **tflile** as the main library to work with Artificial Intelligence, so the **image_picker** was used to grab the pictures from camera and albuns, the **mobx** and **flutter_modular** both were used to structure to state management and dependency injection, also the **translator** was used to translate based on GOOGLE API some texts inside of the app. Some animations were used too, like: **AnimatedContainer**, **animated_text_kit**, etc...
