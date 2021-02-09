@@ -133,8 +133,11 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
             margin: EdgeInsets.only(bottom: 15.0),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
-              child: Image.file(
-                File(sharedController.getPath),
+              child: FadeInImage(
+                placeholder: AssetImage('assets/loading.gif'),
+                image: FileImage(
+                  File(sharedController.getPath),
+                ),
                 fit: BoxFit.fill,
               ),
             ),
@@ -211,6 +214,7 @@ class _GuessingPageState extends ModularState<GuessingPage, GuessingController>
           builder: (context, constraints) => Container(
               width: constraints.maxWidth,
               height: constraints.maxHeight,
+              color: Colors.white,
               child: loading ? loadingScreen() : renderScreen(constraints))),
     );
   }
