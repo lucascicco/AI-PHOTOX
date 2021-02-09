@@ -13,7 +13,13 @@ Now speaking of functionality, the application has an input to capture some imag
 
 
 ## SCREENSHOTS - CAPTURAS DE TELA 
-//
+
+<p align=center> 
+    <span>
+        <img src="assets/screenshots/page1.gif" width=300 height=500/>
+        <img src="assets/screenshots/page2.gif" width=300 height=500/>
+    </span>
+</p>
 
 
 ## LIBRARIES - BIBLIOTECAS
