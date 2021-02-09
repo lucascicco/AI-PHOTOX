@@ -12,3 +12,25 @@ The Ai Photox was developed on Flutter using Tensor Flow Lite **tflite** as the 
 Now speaking of functionality, the application has an input to capture some image through the image picker, that image will be saved in the shared_controller with the mobx that is injected into the Binds of the app_module, allowing the other modules to have access to the controller/state, the screen will redirect the user to the "guessing" page where the **tflite** library comes into action to try to guess what possibly is that image based on the SDD MOBILENET model downloaded and stored in assets/models, in this case, I downloaded a ready model instead of training it, when it is discovered what is in the image, the possibilities appear on the screen and the user can choose right or wrong, if one of the options is consistent with what is in the image. 
 
 
+## SCREENSHOTS - CAPTURAS DE TELA 
+//
+
+
+## LIBRARIES - BIBLIOTECAS
+
+- flutter
+- flutter_mobx
+- mobx
+- flutter_modular
+- tflite
+- image_picker
+- animated_text_kit
+- translator
+
+<hr/>
+
+Developed by,
+
+Desenvolvido por,
+
+lucascicco.
